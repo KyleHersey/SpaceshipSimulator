@@ -8,5 +8,4 @@ public class Frame extends JFrame{
 	public Frame(){
 		super();
 	}
-	
 }

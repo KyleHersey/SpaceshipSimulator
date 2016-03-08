@@ -14,11 +14,15 @@ import java.util.ArrayList;
  */
 public class Model {
 	
+	boolean gameOver;
+	
+	Window drawingFrame;
+	
 	int laserKills;				//deaths by laser
 	int collisionKills;			//deaths by collision
 
 	int highestKillstreak;		//most kills by a single ship
-	final int startShips = 4;	//this many ships on each team at start
+	final int startShips = 5;	//this many ships on each team at start
 	
 	ArrayList<Ship> shipList = new ArrayList<Ship>();	//list of ships
 	
@@ -28,10 +32,16 @@ public class Model {
 	/**
 	 * Initializes the model with the starting ships
 	 */
-	public Model(){
-		for(int i = 0 ; i < startShips; i ++){
-			addGrunt(1);
-			addGrunt(2);
+	public Model(Window panelIN){
+		gameOver = false;
+		drawingFrame = panelIN;
+		
+		//addCarrier(1);
+		//addCarrier(2);
+		
+		for(int i = 0 ; i < 5; i++){
+			addFrigate(1);
+			addFrigate(2);
 		}
 	}
 	
@@ -50,9 +60,9 @@ public class Model {
 			tempShip.move(this);
 			
 			//check for boundary violation
-			if(!(0 < tempShip.xCoord && tempShip.xCoord < 500 &&
-				0 < tempShip.yCoord && tempShip.yCoord < 500)){
-				destroyShip(tempShip, true);
+			if(!(0 < tempShip.coords.getCoordX() && tempShip.coords.getCoordX() < drawingFrame.getSize().width &&
+				0 < tempShip.coords.getCoordY() && tempShip.coords.getCoordY() < drawingFrame.getSize().height)){
+				destroyShip(tempShip, false);
 			}
 			
 			if(shipList.contains(tempShip)){
@@ -66,10 +76,18 @@ public class Model {
 	 * 
 	 * This may need to be an addShip method, which makes use of a ship factory class
 	 *
-	 * @param team		team to make new grunts with
+	 * @param team		team to make new frigates with
 	 */
-	private void addGrunt(int team){
-		shipList.add(new Grunt(team));
+	private void addFrigate(int team){
+		shipList.add(new Frigate(team, this));
+	}
+	
+	private void addDestroyer(int team){
+		shipList.add(new Destroyer(team, this));
+	}
+	
+	private void addCarrier(int team){
+		shipList.add(new Carrier(team, this));
 	}
 	
 	/**
@@ -79,20 +97,18 @@ public class Model {
 	 */
 	public void handleShot(Shot s){
 		shotList.add(s);	//add to list to draw
-		s.getTarget().health -= s.getDamage();	//apply damage (maybe use a method. abstract in ship class?)
+		s.getTarget().health -= s.getSender().damage;	//apply damage (maybe use a method. abstract in ship class?)
 		
 		//if we destroyed the ship.
-		if(s.getTarget().health <= 0){
+		if(s.getTarget().health <= 0 && s.getTarget().destroyed == false){
 			destroyShip(s.getTarget(), true);	//Note: can cause problems with death explosions enabled
+			
+			//System.out.println(s.getSender().team + " killed " + s.getTarget().team);
 			
 			laserKills++;	//may become obsolete as more weapons come into play
 			
-			//print death statement (can be toggled w/o consequence)
-			System.out.println(s.getTarget().shipID + " died via laser" + "\tLaser Kills: " + laserKills + "\tCollisions: " + 
-					collisionKills);
-			
 			//handout experience to the ship (not sure if this is smart)
-			s.getSender().damage *= 2;
+			//s.getSender().damage *= 2;
 			s.getSender().killstreak += 1;
 			
 			//check killstreak - why bother. introduction of different ships makes this less cool
@@ -112,10 +128,18 @@ public class Model {
 	public void destroyShip(Ship s, boolean makeMore){
 		shipList.remove(s);
 		s.onDeath(this);
-		if(makeMore){
+		if(makeMore && !(s instanceof Fighter)){
 			for(int i = 0; i < 2; i++){
-				addGrunt(s.team);
+				replaceShip(s);
 			}
+		}
+	}
+	
+	public void replaceShip(Ship s){
+		if(s instanceof Frigate){
+			shipList.add(new Frigate(s.team, this));
+		} else if(s instanceof Destroyer){
+			shipList.add(new Destroyer(s.team, this));
 		}
 	}
 	

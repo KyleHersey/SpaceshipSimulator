@@ -26,10 +26,10 @@ public class DrawingHandler {
 		//draw all the lasers
 		g.setColor(new Color(111,207,78));
 		for(int i = 0 ; i < m.shotList.size(); i++){
-			g.drawLine(	m.shotList.get(i).getSender().xCoord, 
-						m.shotList.get(i).getSender().yCoord, 
-						m.shotList.get(i).getTarget().xCoord,
-						m.shotList.get(i).getTarget().yCoord);
+			g.drawLine(	m.shotList.get(i).getSender().coords.getCoordX(), 
+						m.shotList.get(i).getSender().coords.getCoordY(), 
+						m.shotList.get(i).getTarget().coords.getCoordX(),
+						m.shotList.get(i).getTarget().coords.getCoordY());
 		}
 		
 		//words at the bottom

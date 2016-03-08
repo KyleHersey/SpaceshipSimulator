@@ -3,7 +3,6 @@ public class Shot {
 
 	private Ship sender;
 	private Ship target;
-	private int damage;
 	private String type;
 	
 		
@@ -15,19 +14,14 @@ public class Shot {
 	 * @param senderIN	the shooter
 	 * @param typeIN	the type of damage
 	 */
-	public Shot(Ship shipIN, int damageIN, Ship senderIN, String typeIN){
+	public Shot(Ship shipIN, Ship senderIN, String typeIN){
 		target = shipIN;
-		damage = damageIN;
 		sender = senderIN;
 		type = typeIN;
 	}
 	
 	public Ship getTarget(){
 		return target;
-	}
-	
-	public int getDamage(){
-		return damage;
 	}
 	
 	public Ship getSender(){
