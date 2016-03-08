@@ -1,0 +1,28 @@
+Ideas:
+	Shiptypes:
+		Capital support ship: 	Very very slow. Boost nearby smaller ships, does damage proportional to size of target ship.
+		Bombers: 				Weak to interceptors. Heavy damage to large ships.
+		Fighters:				Good against interceptors (rename grunt to this). Bad against bombers. OK to everything else.
+		Interceptors:			Specializes in destroying bombers, weak against other things.
+		Logistics:				Not fast. Heals nearby teammates. No weapons
+		Dreadnaughts:			Lots of health, specialized in destroying other capital ships. Cannot hit non-capital ships.
+		EWAR:					Apply lack of range, targetting capability. Energy? (add energy to ships?)
+		More:   				-Essentially all of EVE online...-
+	
+	Ships need to be able to attempt to avoid collisions
+	Determine fleet compositions before start (actual simulation)
+	Fleet commander shiptype to give instructions to ships on its team regarding movement and targetting.
+	
+	FIND A WAY TO OPTIMIZE TARGET FINDING. ANALYZING ALL OTHER SHIPS IS N^N CALCULATIONS.
+		Current optimizations: 
+			Only target finds when current target is dead. Very limiting, very powerful(calculationwise).
+			Collisions have inherently strong effect against larger ship count (given current movement patterns and area size).
+	
+	Adjust to at least take a large chunk of the screen.
+	
+	Can this be made into a game, where players determine fleet compositions?
+		Ships have points. Allow up to a certain number of points per fleet.
+		Players can specify:  	how many of each type of ship
+								which targeting algorithm to use
+								what flight pattern to use
+	
