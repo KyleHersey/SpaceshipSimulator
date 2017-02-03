@@ -1,0 +1,14 @@
+main\java\Model\Ships\ComparatorShip.class
+main\java\Model\Ships\Fighter.class
+main\java\Model\Ships\Frigate.class
+main\java\Model\Shot.class
+main\java\Rendering\DrawingHandler.class
+main\java\Rendering\Panel.class
+main\java\Model\Ships\Destroyer.class
+main\java\Game\Game.class
+main\java\Model\Ships\Ship.class
+main\java\Start\Start.class
+main\java\Model\Coordinates.class
+main\java\Model\Model.class
+main\java\Rendering\Frame.class
+main\java\Model\Ships\Carrier.class
